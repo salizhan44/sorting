@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        body{
+
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .lines{
+            display: grid;
+            grid-template-areas: 
+               'a1 a2 a3 a4 a5 a6 a7 a8 a9 a10';
+            justify-content: center;
+            align-items: center;
+        }
+        .buttons{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .button{
+            width: 80px;
+            height: 25px;
+            background: rgb(56, 0, 56);
+            color: white;
+            border: none;
+            
+        }
+        .button:hover{
+            background: rgb(20, 0, 20);
+        }
+        .div{
+            width: 60px;
+            background: purple;
+        }
+
+        #div1{
+            height: 60px;
+            grid-area: a1;
+
+        }
+        #div2{
+            height: 120px;
+            grid-area: a2;
+
+        }
+        #div3{
+            height: 180px;
+            grid-area: a3;
+
+        }
+        #div4{
+            height: 240px;
+            grid-area: a4;
+
+        }
+        #div5{
+            height: 300px;
+            grid-area: a5;
+
+        }
+        #div6{
+            height: 360px;
+            grid-area: a6;
+
+        }
+        #div7{
+            height: 420px;
+            grid-area: a7;
+
+        }
+        #div8{
+            height: 480px;
+            grid-area: a8;
+        }
+        #div9{
+            height: 540px;
+            grid-area: a9;
+
+        }
+        #div10{
+            height: 600px;
+            grid-area: a10;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="lines">
+        <div class='div' id='div1'></div>
+        <div class='div' id='div2'></div>
+        <div class='div' id='div3'></div>
+        <div class='div' id='div4'></div>
+        <div class='div' id='div5'></div>
+        <div class='div' id='div6'></div>
+        <div class='div' id='div7'></div>
+        <div class='div' id='div8'></div>
+        <div class='div' id='div9'></div>
+        <div class='div' id='div10'></div>
+    </div>
+
+    <div class="buttons">
+        <button class="button" id="btn1">shuffle</button>
+        <button class="button" id="btn2">odd-even</button>
+        <button class="button" id="btn3">shaker</button>
+        <button class="button" id="btn4">bubble</button>
+    </div>
+
+    <script>
+
+            function cloneArray(arr){
+                let clone = [];
+                for(let i = 0; i < arr.length; i++){
+                    clone[i] = arr[i];
+                }
+                return clone;
+            }
+            
+            let shuffle = document.querySelector('#btn1')
+            let oddeven = document.querySelector('#btn2')
+            let shaker = document.querySelector('#btn3')
+            let bubble = document.querySelector('#btn4')
+
+            let c = 0
+
+            let div1 = document.querySelector('#div1');
+            let div2 = document.querySelector('#div2');
+            let div3 = document.querySelector('#div3');
+            let div4 = document.querySelector('#div4');
+            let div5 = document.querySelector('#div5');
+            let div6 = document.querySelector('#div6');
+            let div7 = document.querySelector('#div7');
+            let div8 = document.querySelector('#div8');
+            let div9 = document.querySelector('#div9');
+            let div10 = document.querySelector('#div10');
+            
+            let divs = [div1, div2, div3, div4, div5, div6, div7, div8, div9, div10]
+
+            let mas = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+            let mas2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+            let h = []
+
+            function Shuffle(){
+                mas.sort(()=>Math.random()-0.5)
+                for(let i = 0; i < 10; i++){
+                    divs[mas[i]].style.gridArea = 'a'+([i+1])
+                }
+            } 
+
+            function A(i, Timeout){
+                    setTimeout(() => {
+                        for(let j = 0; j < divs.length; j++){
+                            divs[h[i][j]].style.gridArea = 'a' + ([j+1])
+                        
+                        }
+                       
+                    }, Timeout)
+                    
+            }
+
+            function oddevenSort(){
+                c = 1
+                for(let n = 0; n < mas.length; n++){
+                    for(let i = 0; i < mas.length; i+=2){
+                        if(mas[i] > mas[i+1]){ 
+                            let p = mas[i]
+                            mas[i] = mas[i+1]
+                            mas[i+1] = p
+                            h.push(cloneArray(mas))
+
+                        }
+                    }
+                    for(let j = 1; j < mas.length-1; j+=2){
+                        if(mas[j] > mas[j+1]){
+
+                            let p = mas[j]
+                            mas[j] = mas[j+1]
+                            mas[j+1] = p
+
+
+                            h.push(cloneArray(mas))
+                        
+                        }
+                    }
+                }
+
+                for(let i = 0; i < h.length; i++){
+                    A(i, i*200)
+                }
+
+                setTimeout(function(){
+                     h = []
+                     c = 0
+                }, h.length*200)
+
+            }     
+
+        function ShakerSort(){
+            c = 1
+            let left = []
+            let right = []
+
+            for(let ij = 0; ij < mas.length; ij++){
+                for(let i = 0; i < mas.length-1; i++){
+                
+                    if(mas[i] > mas[i+1]){
+                        let p = mas[i]
+                        mas[i] = mas[i+1]
+                        mas[i+1] = p
+                        h.push(left.concat(mas, right.reverse()))
+
+                    }   
+                
+                }
+
+            
+                for(let j = mas.length-1; j > -1; j--){
+                
+                    if(mas[j] > mas[j+1]){
+                        let p = mas[j]
+                        mas[j] = mas[j+1]
+                        mas[j+1] = p
+                        h.push(left.concat(mas, right.reverse()))
+                    }   
+                }
+            }
+            mas = left.concat(mas, right.reverse())
+            for(let i = 0; i < h.length; i++){
+                    A(i, i*200)
+            }
+
+            setTimeout(function(){
+                     h = []
+                     c = 0
+                }, h.length*200)
+
+        }
+
+
+
+
+        function BubbleSort(){
+
+            c = 0
+            let d = 9
+
+            for(let j = 0; j < 10; j++){
+                for( let i = 0; i < d; i++){
+                    if(mas[i] > mas[i+1]){
+                        let p = mas[i]
+                        mas[i] = mas[i+1]
+                        mas[i+1] = p
+                        h.push(cloneArray(mas))
+                    }
+                }
+                d--
+            
+            }
+            for(let i = 0; i < h.length; i++){
+                    A(i, i*200)
+            }
+
+            setTimeout(function(){
+                     h = []
+                     c = 0
+                }, h.length*200)
+
+            d = 9
+        }
+
+            shuffle.onclick = () => {
+                if(c == 0){
+                    Shuffle()
+                }
+            }
+            oddeven.onclick = () => {
+                if(c == 0){
+                    oddevenSort()
+                }                         
+            }
+            shaker.onclick = () => {
+                if(c == 0){
+                    ShakerSort()
+                }
+            }
+            bubble.onclick = () => {
+                if(c == 0){
+                    BubbleSort()
+                }
+            }
+
+
+
+    </script>
+</body>
+</html>
